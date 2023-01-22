@@ -1,0 +1,112 @@
+!
+version 12.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 120.57.201.242 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1.365
+ encapsulation dot1Q 365
+ ip address 10.126.244.1 255.255.255.192
+!
+interface FastEthernet0/1.366
+ encapsulation dot1Q 366
+ ip address 10.126.244.65 255.255.255.192
+!
+interface FastEthernet0/1.367
+ encapsulation dot1Q 367
+ ip address 10.126.247.1 255.255.255.224
+!
+interface FastEthernet0/1.368
+ encapsulation dot1Q 368
+ ip address 10.126.242.129 255.255.255.128
+!
+interface FastEthernet0/1.369
+ encapsulation dot1Q 369
+ ip address 10.126.247.33 255.255.255.224
+!
+interface FastEthernet0/1.385
+ encapsulation dot1Q 385
+ ip address 10.126.242.1 255.255.255.192
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 120.57.201.241 
+ip route 10.126.244.128 255.255.255.192 10.126.242.2 
+ip route 10.126.244.192 255.255.255.192 10.126.242.2 
+ip route 10.126.243.0 255.255.255.128 10.126.242.2 
+ip route 10.126.243.128 255.255.255.128 10.126.242.2 
+ip route 10.126.247.64 255.255.255.240 10.126.242.2 
+ip route 10.126.245.0 255.255.255.240 10.126.242.3 
+ip route 10.126.245.64 255.255.255.240 10.126.242.3 
+ip route 10.126.245.128 255.255.255.240 10.126.242.3 
+ip route 10.126.245.192 255.255.255.240 10.126.242.3 
+ip route 10.126.240.0 255.255.255.0 10.126.242.3 
+ip route 10.126.246.0 255.255.255.192 10.126.242.4 
+ip route 10.126.246.64 255.255.255.192 10.126.242.4 
+ip route 10.126.246.128 255.255.255.192 10.126.242.4 
+ip route 10.126.246.192 255.255.255.192 10.126.242.4 
+ip route 10.126.241.0 255.255.255.0 10.126.242.4 
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+

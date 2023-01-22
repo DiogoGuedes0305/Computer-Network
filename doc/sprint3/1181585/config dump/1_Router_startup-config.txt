@@ -1,0 +1,221 @@
+!
+version 12.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+ip dhcp excluded-address 10.126.242.129
+ip dhcp excluded-address 10.126.242.193
+ip dhcp excluded-address 10.126.243.1
+ip dhcp excluded-address 10.126.242.1
+ip dhcp excluded-address 10.126.243.33
+ip dhcp excluded-address 10.126.240.1
+!
+ip dhcp pool 1_USER0
+ network 10.126.242.128 255.255.255.192
+ default-router 10.126.242.129
+ip dhcp pool 1_USER1
+ network 10.126.242.192 255.255.255.192
+ default-router 10.126.242.193
+ip dhcp pool 1_WIFI
+ network 10.126.243.0 255.255.255.224
+ default-router 10.126.243.1
+ip dhcp pool 1_VOIP
+ network 10.126.243.32 255.255.255.224
+ default-router 10.126.243.33
+ option 150 ip 10.126.243.33
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 120.57.201.242 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1.365
+ encapsulation dot1Q 365
+ ip address 10.126.242.129 255.255.255.192
+!
+interface FastEthernet0/1.366
+ encapsulation dot1Q 366
+ ip address 10.126.242.193 255.255.255.192
+!
+interface FastEthernet0/1.367
+ encapsulation dot1Q 367
+ ip address 10.126.243.1 255.255.255.224
+!
+interface FastEthernet0/1.368
+ encapsulation dot1Q 368
+ ip address 10.126.242.1 255.255.255.128
+ ip nat inside
+!
+interface FastEthernet0/1.369
+ encapsulation dot1Q 369
+ ip address 10.126.243.33 255.255.255.224
+!
+interface FastEthernet0/1.385
+ encapsulation dot1Q 385
+ ip address 10.126.240.1 255.255.255.128
+ ip nat outside
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ log-adjacency-changes
+ network 10.126.240.0 0.0.15.255 area 0
+ network 10.126.242.0 0.0.1.255 area 1
+!
+router rip
+!
+ip nat inside source static tcp 10.126.242.3 80 10.126.240.1 80 
+ip nat inside source static tcp 10.126.242.3 443 10.126.240.1 443 
+ip nat inside source static tcp 10.126.242.2 53 10.126.240.1 53 
+ip nat inside source static udp 10.126.242.2 53 10.126.240.1 53 
+ip classless
+ip route 0.0.0.0 0.0.0.0 120.57.201.241 
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+!
+dial-peer voice 2 voip
+ destination-pattern 2..
+ session target ipv4:10.126.240.2
+!
+dial-peer voice 3 voip
+ destination-pattern 3..
+ session target ipv4:10.126.240.3
+!
+dial-peer voice 4 voip
+ destination-pattern 4..
+ session target ipv4:10.126.240.4
+!
+telephony-service
+ max-ephones 20
+ max-dn 20
+ ip source-address 10.126.243.33 port 2000
+ auto assign 1 to 20
+!
+ephone-dn 1
+ number 100
+!
+ephone-dn 2
+ number 101
+!
+ephone-dn 3
+ number 102
+!
+ephone-dn 4
+ number 103
+!
+ephone-dn 5
+ number 104
+!
+ephone-dn 6
+ number 105
+!
+ephone-dn 7
+ number 106
+!
+ephone-dn 8
+ number 107
+!
+ephone-dn 9
+ number 108
+!
+ephone-dn 10
+ number 109
+!
+ephone-dn 11
+ number 110
+!
+ephone-dn 12
+ number 111
+!
+ephone-dn 13
+ number 112
+!
+ephone-dn 14
+ number 113
+!
+ephone-dn 15
+ number 114
+!
+ephone-dn 16
+ number 115
+!
+ephone-dn 17
+ number 116
+!
+ephone-dn 18
+ number 117
+!
+ephone-dn 19
+ number 118
+!
+ephone-dn 20
+ number 119
+!
+ephone 1
+ device-security-mode none
+ mac-address 000A.F3B0.33E2
+ type 7960
+ button 1:1
+!
+ephone 2
+ device-security-mode none
+ mac-address 0060.47D3.4EBC
+ type 7960
+ button 1:2
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+!
+end
+
